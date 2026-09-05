@@ -13,17 +13,18 @@ datasource db {
 }
 
 model Project {
-  id          String   @id @default(cuid())
-  slug        String   @unique
-  title       String
-  subtitle    String
-  summary     String
-  content     String   @db.Text
-  coverImage  String
-  liveUrl     String?
-  repoUrl     String?
-  tags        String[]
-  isLive      Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id         String   @id @default(cuid())
+  slug       String   @unique
+  title      String
+  subtitle   String
+  summary    String
+  content    String   @db.Text
+  coverImage String
+  liveUrl    String?
+  repoUrl    String?
+  tags       String[]
+  featured   Boolean  @default(false)
+  isLive     Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }

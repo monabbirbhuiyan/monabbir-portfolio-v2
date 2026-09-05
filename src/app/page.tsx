@@ -12,7 +12,7 @@ export default async function HomePage() {
   let projects: any[] = [];
   try {
     projects = await prisma.project.findMany({
-      orderBy: { createdAt: "desc" },
+      orderBy: [{ featured: "desc" }, { createdAt: "desc" }],
     });
   } catch {
     projects = [];
@@ -114,14 +114,14 @@ export default async function HomePage() {
         <div className="lg:col-span-5 relative min-h-120 bg-neutral-100 flex items-center justify-center p-8">
           <div className="relative w-full h-full min-h-110">
             <Image
-              src="https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?auto=format&fit=crop&w=1200&q=80"
-              alt="Switch macro"
+              src={"/assets/monabbir-b.jpg"}
+              alt="Monabbir Bhuiyan"
               fill
               className="object-cover"
               priority
             />
             <div className="absolute bottom-2 left-2 text-[10px] font-mono text-neutral-400 bg-white/80 px-2 py-0.5 border border-neutral-200">
-              switch_macro_4k.raw
+              monabbir_bhuiyan.py
             </div>
           </div>
         </div>
@@ -237,7 +237,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* 02 Repository Section */}
+      {/* 02 Repository Showcase */}
       <section id="projects" className="border-b border-neutral-200">
         <div className="p-8 border-b border-neutral-200 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
@@ -267,102 +267,55 @@ export default async function HomePage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 divide-y md:divide-y-0 md:divide-x border-neutral-200">
-          {/* Card 1 */}
-          <div className="group block bg-white">
-            <div className="relative aspect-4/3 w-full bg-neutral-100 border-b border-neutral-200 p-6 flex items-center justify-center">
-              <Image
-                src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80"
-                alt="StudyPilot"
-                fill
-                className="object-cover grayscale"
-              />
-            </div>
-            <div className="p-6">
-              <div className="flex items-center justify-between">
-                <h3 className="text-xs font-semibold font-mono text-neutral-900">
-                  StudyPilot — Academic Workflow Engine
-                </h3>
-                <span className="inline-flex items-center gap-1.5 text-[10px] text-[#10b981] font-mono">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#10b981]" />{" "}
-                  live
-                </span>
-              </div>
-              <p className="mt-2 text-xs text-neutral-500 leading-relaxed font-sans">
-                Academic productivity platform powered by Spring Boot backend
-                services and structured REST APIs.
-              </p>
-              <div className="mt-4 text-[11px] font-mono text-neutral-400 group-hover:text-blue-600">
-                git push →
-              </div>
-            </div>
-          </div>
-
-          {/* Card 2 */}
-          <div className="group block bg-white">
-            <div className="relative aspect-4/3 w-full bg-neutral-100 border-b border-neutral-200 p-6 flex items-center justify-center">
-              <Image
-                src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80"
-                alt="FPGA Digital Systems"
-                fill
-                className="object-cover grayscale"
-              />
-            </div>
-            <div className="p-6">
-              <div className="flex items-center justify-between">
-                <h3 className="text-xs font-semibold font-mono text-neutral-900">
-                  LogicCore — DE10-Lite FPGA Engine
-                </h3>
-                <span className="inline-flex items-center gap-1.5 text-[10px] text-[#10b981] font-mono">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#10b981]" />{" "}
-                  built
-                </span>
-              </div>
-              <p className="mt-2 text-xs text-neutral-500 leading-relaxed font-sans">
-                Hardware digital logic and finite state machines built in
-                Verilog for the Intel MAX 10 FPGA.
-              </p>
-              <div className="mt-4 text-[11px] font-mono text-neutral-400 group-hover:text-blue-600">
-                git push →
-              </div>
-            </div>
-          </div>
-
-          {/* Dynamic database projects */}
-          {projects.map((proj) => (
-            <Link
-              key={proj.id}
-              href={`/projects/${proj.slug}`}
-              className="group block bg-white hover:bg-neutral-50/70 transition-colors"
-            >
-              <div className="relative aspect-4/3 w-full bg-neutral-100 border-b border-neutral-200">
-                <Image
-                  src={proj.coverImage}
-                  alt={proj.title}
-                  fill
-                  className="object-cover grayscale"
-                />
-              </div>
-              <div className="p-6">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-xs font-semibold font-mono text-neutral-900 group-hover:text-blue-600">
-                    {proj.title} — {proj.subtitle}
-                  </h3>
-                  {proj.isLive && (
-                    <span className="inline-flex items-center gap-1.5 text-[10px] text-[#10b981] font-mono">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#10b981]" />{" "}
-                      live
-                    </span>
+          {projects.map((proj) => {
+            const isFeatured = proj.featured;
+            return (
+              <Link
+                key={proj.id}
+                href={`/projects/${proj.slug}`}
+                className="group block bg-white hover:bg-neutral-50/70 transition-colors border-b border-neutral-200"
+              >
+                <div className="relative aspect-4/3 w-full bg-neutral-100 border-b border-neutral-200 overflow-hidden">
+                  <img
+                    src={proj.coverImage}
+                    alt={proj.title}
+                    className="w-full h-full object-cover grayscale contrast-110 group-hover:scale-102 transition-transform duration-300"
+                  />
+                  {isFeatured && (
+                    <div className="absolute top-2 left-2 bg-blue-600 text-white text-[9px] font-mono px-1.5 py-0.5 tracking-wider uppercase font-semibold">
+                      ★ FEATURED
+                    </div>
                   )}
                 </div>
-                <p className="mt-2 text-xs text-neutral-500 leading-relaxed font-sans line-clamp-2">
-                  {proj.summary}
-                </p>
-                <div className="mt-4 text-[11px] font-mono text-neutral-400 group-hover:text-blue-600">
-                  git push →
+                <div className="p-6">
+                  <div className="flex items-center justify-between gap-2">
+                    <h3 className="text-xs font-semibold font-mono text-neutral-900 group-hover:text-blue-600 truncate">
+                      {proj.title} — {proj.subtitle}
+                    </h3>
+                    {proj.isLive && (
+                      <span className="inline-flex items-center gap-1.5 text-[10px] text-[#10b981] font-mono shrink-0">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#10b981]" />{" "}
+                        live
+                      </span>
+                    )}
+                  </div>
+                  <p className="mt-2 text-xs text-neutral-500 leading-relaxed font-sans line-clamp-2">
+                    {proj.summary}
+                  </p>
+                  <div className="mt-4 text-[11px] font-mono text-neutral-400 group-hover:text-blue-600 flex items-center gap-1">
+                    <span>git push</span>
+                    <span>→</span>
+                  </div>
                 </div>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            );
+          })}
+
+          {projects.length === 0 && (
+            <div className="p-8 col-span-3 text-center text-xs text-neutral-400 font-mono border-b">
+              // No projects logged yet. Add your first record at /admin.
+            </div>
+          )}
         </div>
       </section>
 
