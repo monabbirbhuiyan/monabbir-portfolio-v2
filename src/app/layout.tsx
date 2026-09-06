@@ -19,8 +19,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={mono.variable}>
-      <body className="bg-white text-[#111111] font-mono antialiased min-h-screen">
+    <html lang="en" className="scroll-smooth">
+      <body className="antialiased bg-white text-neutral-900 font-mono">
         <Navbar />
         {children}
       </body>

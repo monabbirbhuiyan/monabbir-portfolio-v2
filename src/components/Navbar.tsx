@@ -77,10 +77,16 @@ export default function Navbar() {
           02 projects
         </button>
         <button
+          onClick={() => scrollTo("experience")}
+          className="hover:text-black transition-colors cursor-pointer"
+        >
+          03 experience
+        </button>
+        <button
           onClick={() => scrollTo("contact")}
           className="hover:text-black transition-colors cursor-pointer"
         >
-          03 contact
+          04 contact
         </button>
         <span className="text-blue-600 font-semibold pl-2 tabular-nums">
           {formattedPercent}% LOADED

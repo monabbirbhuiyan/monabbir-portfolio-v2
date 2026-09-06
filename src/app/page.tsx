@@ -1,6 +1,8 @@
+import AboutSection from "@/components/landing/AboutSection";
+import ExperienceSection from "@/components/landing/ExperienceSection";
+import ProjectShowcase from "@/components/ProjectShowcase";
 import prisma from "@/lib/prisma";
 import Image from "next/image";
-import Link from "next/link";
 
 //icons
 import { FaGithub, FaLinkedin } from "react-icons/fa";
@@ -71,18 +73,21 @@ export default async function HomePage() {
               <span className="text-neutral-900">{"}"}</span>
             </div>
 
-            <div className="mt-8 flex gap-3">
+            {/* Hero Action CTA */}
+            <div className="flex flex-wrap gap-4 mt-8">
               <a
                 href="#projects"
-                className="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-mono transition-colors"
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-neutral-900 text-white font-mono text-xs hover:bg-neutral-800 transition-colors cursor-pointer"
               >
-                view_projects()
+                <span>explore_repository()</span>
+                <span>↓</span>
               </a>
               <a
                 href="#contact"
-                className="px-5 py-2.5 border border-neutral-200 hover:bg-neutral-50 text-neutral-700 text-xs font-mono transition-colors"
+                className="inline-flex items-center gap-2 px-5 py-2.5 border border-neutral-300 text-neutral-700 font-mono text-xs hover:bg-neutral-50 transition-colors"
               >
-                open_connection()
+                <span>open_connection()</span>
+                <span>→</span>
               </a>
             </div>
           </div>
@@ -114,11 +119,12 @@ export default async function HomePage() {
         <div className="lg:col-span-5 relative min-h-120 bg-neutral-100 flex items-center justify-center p-8">
           <div className="relative w-full h-full min-h-110">
             <Image
-              src={"/assets/monabbir-b.jpg"}
+              src="/assets/monabbir-b.jpg"
               alt="Monabbir Bhuiyan"
               fill
-              className="object-cover"
-              priority
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="object-cover contrast-110"
+              priority // add if this image is above the fold in the hero
             />
             <div className="absolute bottom-2 left-2 text-[10px] font-mono text-neutral-400 bg-white/80 px-2 py-0.5 border border-neutral-200">
               monabbir_bhuiyan.py
@@ -128,196 +134,18 @@ export default async function HomePage() {
       </section>
 
       {/* 01 About Section */}
-      <section
-        id="about"
-        className="grid grid-cols-1 lg:grid-cols-12 border-b border-neutral-200"
-      >
-        <div className="lg:col-span-3 p-8 border-b lg:border-b-0 lg:border-r border-neutral-200">
-          <span className="text-xs text-neutral-400">// 01</span>
-          <h2 className="text-2xl font-mono tracking-tight mt-1">about()</h2>
-        </div>
-        <div className="lg:col-span-9 p-8 lg:p-12">
-          <p className="text-sm md:text-base text-neutral-700 leading-relaxed font-sans max-w-3xl">
-            Software engineer based in Toronto focused on architecting
-            responsive full-stack applications, scalable backend systems, and
-            hardware-level digital logic. I emphasize clean code, robust schema
-            design, and performant developer workflows using modern toolchains.
-          </p>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12 border border-neutral-200 p-6 bg-white">
-            <div>
-              <span className="text-[10px] tracking-wider text-neutral-400 uppercase font-mono">
-                LANGUAGES
-              </span>
-              <ul className="mt-3 space-y-1.5 text-xs font-mono text-neutral-700">
-                <li>
-                  <span className="text-[#10b981]">+</span> TypeScript
-                </li>
-                <li>
-                  <span className="text-[#10b981]">+</span> Java
-                </li>
-                <li>
-                  <span className="text-[#10b981]">+</span> Verilog
-                </li>
-                <li>
-                  <span className="text-[#10b981]">+</span> SQL
-                </li>
-                <li>
-                  <span className="text-[#10b981]">+</span> Python
-                </li>
-              </ul>
-            </div>
-            <div>
-              <span className="text-[10px] tracking-wider text-neutral-400 uppercase font-mono">
-                BACKEND & DATA
-              </span>
-              <ul className="mt-3 space-y-1.5 text-xs font-mono text-neutral-700">
-                <li>
-                  <span className="text-[#10b981]">+</span> Spring Boot
-                </li>
-                <li>
-                  <span className="text-[#10b981]">+</span> Node.js / Bun
-                </li>
-                <li>
-                  <span className="text-[#10b981]">+</span> Prisma ORM
-                </li>
-                <li>
-                  <span className="text-[#10b981]">+</span> PostgreSQL
-                </li>
-                <li>
-                  <span className="text-[#10b981]">+</span> Supabase
-                </li>
-              </ul>
-            </div>
-            <div>
-              <span className="text-[10px] tracking-wider text-neutral-400 uppercase font-mono">
-                FRONTEND
-              </span>
-              <ul className="mt-3 space-y-1.5 text-xs font-mono text-neutral-700">
-                <li>
-                  <span className="text-[#10b981]">+</span> Next.js (App Router)
-                </li>
-                <li>
-                  <span className="text-[#10b981]">+</span> React
-                </li>
-                <li>
-                  <span className="text-[#10b981]">+</span> Tailwind CSS
-                </li>
-                <li>
-                  <span className="text-[#10b981]">+</span> shadcn/ui
-                </li>
-                <li>
-                  <span className="text-[#10b981]">+</span> Framer Motion
-                </li>
-              </ul>
-            </div>
-            <div>
-              <span className="text-[10px] tracking-wider text-neutral-400 uppercase font-mono">
-                SYSTEMS & OPS
-              </span>
-              <ul className="mt-3 space-y-1.5 text-xs font-mono text-neutral-700">
-                <li>
-                  <span className="text-[#10b981]">+</span> Linux / Unix
-                </li>
-                <li>
-                  <span className="text-[#10b981]">+</span> FPGA (DE10-Lite)
-                </li>
-                <li>
-                  <span className="text-[#10b981]">+</span> Git / GitHub
-                </li>
-                <li>
-                  <span className="text-[#10b981]">+</span> Neon Serverless
-                </li>
-                <li>
-                  <span className="text-[#10b981]">+</span> RESTful APIs
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
+      <AboutSection />
 
       {/* 02 Repository Showcase */}
-      <section id="projects" className="border-b border-neutral-200">
-        <div className="p-8 border-b border-neutral-200 flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div>
-            <span className="text-xs text-neutral-400">// 02</span>
-            <h2 className="text-2xl font-mono tracking-tight mt-1">
-              repository()
-            </h2>
-          </div>
-          <div className="flex flex-wrap gap-1 text-xs font-mono">
-            <button className="px-3 py-1 bg-blue-600 text-white">all</button>
-            <button className="px-3 py-1 border border-neutral-200 text-neutral-600 hover:bg-neutral-50">
-              Next.js
-            </button>
-            <button className="px-3 py-1 border border-neutral-200 text-neutral-600 hover:bg-neutral-50">
-              Spring Boot
-            </button>
-            <button className="px-3 py-1 border border-neutral-200 text-neutral-600 hover:bg-neutral-50">
-              Prisma
-            </button>
-            <button className="px-3 py-1 border border-neutral-200 text-neutral-600 hover:bg-neutral-50">
-              PostgreSQL
-            </button>
-            <button className="px-3 py-1 border border-neutral-200 text-neutral-600 hover:bg-neutral-50">
-              Verilog
-            </button>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 divide-y md:divide-y-0 md:divide-x border-neutral-200">
-          {projects.map((proj) => {
-            const isFeatured = proj.featured;
-            return (
-              <Link
-                key={proj.id}
-                href={`/projects/${proj.slug}`}
-                className="group block bg-white hover:bg-neutral-50/70 transition-colors border-b border-neutral-200"
-              >
-                <div className="relative aspect-4/3 w-full bg-neutral-100 border-b border-neutral-200 overflow-hidden">
-                  <img
-                    src={proj.coverImage}
-                    alt={proj.title}
-                    className="w-full h-full object-cover grayscale contrast-110 group-hover:scale-102 transition-transform duration-300"
-                  />
-                  {isFeatured && (
-                    <div className="absolute top-2 left-2 bg-blue-600 text-white text-[9px] font-mono px-1.5 py-0.5 tracking-wider uppercase font-semibold">
-                      ★ FEATURED
-                    </div>
-                  )}
-                </div>
-                <div className="p-6">
-                  <div className="flex items-center justify-between gap-2">
-                    <h3 className="text-xs font-semibold font-mono text-neutral-900 group-hover:text-blue-600 truncate">
-                      {proj.title} — {proj.subtitle}
-                    </h3>
-                    {proj.isLive && (
-                      <span className="inline-flex items-center gap-1.5 text-[10px] text-[#10b981] font-mono shrink-0">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#10b981]" />{" "}
-                        live
-                      </span>
-                    )}
-                  </div>
-                  <p className="mt-2 text-xs text-neutral-500 leading-relaxed font-sans line-clamp-2">
-                    {proj.summary}
-                  </p>
-                  <div className="mt-4 text-[11px] font-mono text-neutral-400 group-hover:text-blue-600 flex items-center gap-1">
-                    <span>git push</span>
-                    <span>→</span>
-                  </div>
-                </div>
-              </Link>
-            );
-          })}
-
-          {projects.length === 0 && (
-            <div className="p-8 col-span-3 text-center text-xs text-neutral-400 font-mono border-b">
-              // No projects logged yet. Add your first record at /admin.
-            </div>
-          )}
-        </div>
+      <section
+        id="projects"
+        className="scroll-mt-12 border-b border-neutral-200"
+      >
+        <ProjectShowcase projects={projects} />
       </section>
+
+      {/* 03 Experience Section */}
+      <ExperienceSection />
 
       {/* 03 Contact Section */}
       <section
@@ -325,7 +153,7 @@ export default async function HomePage() {
         className="grid grid-cols-1 lg:grid-cols-12 border-b border-neutral-200"
       >
         <div className="lg:col-span-3 p-8 border-b lg:border-b-0 lg:border-r border-neutral-200">
-          <span className="text-xs text-neutral-400">// 03</span>
+          <span className="text-xs text-neutral-400">// 04</span>
           <h2 className="text-2xl font-mono tracking-tight mt-1">contact()</h2>
         </div>
         <div className="lg:col-span-9 p-8 lg:p-12">
@@ -358,6 +186,118 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* 04 Footer & System Telemetry */}
+      <footer className="border-t border-neutral-200 bg-white font-mono text-xs">
+        {/* Upper Footer: Status & Direct Inquiries */}
+        <div className="grid grid-cols-1 md:grid-cols-12 divide-y md:divide-y-0 md:divide-x divide-neutral-200 border-b border-neutral-200">
+          {/* Column 1: System Status & Core Node */}
+          <div className="md:col-span-4 p-6 md:p-8 space-y-3">
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-[#10b981] animate-pulse" />
+              <span className="text-neutral-900 font-semibold uppercase tracking-wider text-[11px]">
+                SYSTEMS_ONLINE // AVAILABLE_FOR_ROLES
+              </span>
+            </div>
+            <p className="text-neutral-500 font-sans text-xs leading-relaxed">
+              Software engineering student at York University & founder at Suika
+              Soft. Focused on high-performance native systems, deterministic
+              state machines, and modern distributed web platforms.
+            </p>
+            <div className="pt-2 text-[11px] text-neutral-400">
+              location: Toronto, ON [43.6532° N, 79.3832° W]
+            </div>
+          </div>
+
+          {/* Column 2: Direct Directory & Quick Navigation */}
+          <div className="md:col-span-4 p-6 md:p-8 space-y-3">
+            <span className="text-neutral-400 uppercase text-[10px] tracking-wider block">
+              // directory_routing
+            </span>
+            <nav className="flex flex-col space-y-2 text-neutral-600">
+              <a
+                href="#about"
+                className="hover:text-blue-600 transition-colors w-fit"
+              >
+                &gt; /about
+              </a>
+              <a
+                href="#projects"
+                className="hover:text-blue-600 transition-colors w-fit"
+              >
+                &gt; /repository
+              </a>
+              <a
+                href="#experience"
+                className="hover:text-blue-600 transition-colors w-fit"
+              >
+                &gt; /experience
+              </a>
+            </nav>
+          </div>
+
+          {/* Column 3: Communication & Relays */}
+          <div className="md:col-span-4 p-6 md:p-8 space-y-3">
+            <span className="text-neutral-400 uppercase text-[10px] tracking-wider block">
+              // communication_relays
+            </span>
+            <div className="flex flex-col space-y-2">
+              <a
+                href="https://github.com/monabbirbhuiyan"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-neutral-700 hover:text-blue-600 transition-colors flex items-center justify-between group"
+              >
+                <span>github.com/monabbirbhuiyan</span>
+                <span className="text-neutral-400 group-hover:text-blue-600">
+                  ↗
+                </span>
+              </a>
+              <a
+                href="https://www.linkedin.com/in/monabbir-bhuiyan-763247206/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-neutral-700 hover:text-blue-600 transition-colors flex items-center justify-between group"
+              >
+                <span>linkedin/monabbir-bhuiyan</span>
+                <span className="text-neutral-400 group-hover:text-blue-600">
+                  ↗
+                </span>
+              </a>
+              <a
+                href="mailto:monabbir.179@gmail.com"
+                className="text-neutral-700 hover:text-blue-600 transition-colors flex items-center justify-between group"
+              >
+                <span>monabbir.179@gmail.com</span>
+                <span className="text-neutral-400 group-hover:text-blue-600">
+                  ↗
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* Lower Footer: Completely Centered */}
+        <div className="px-6 md:px-8 py-6 flex flex-col items-center justify-center gap-3 text-[11px] text-neutral-400 bg-neutral-50/40 text-center">
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
+            <span suppressHydrationWarning>
+              © {new Date().getFullYear()} Monabbir Bhuiyan
+            </span>
+            <span className="hidden sm:inline">·</span>
+            <span>built_with: Next.js 16 + Tailwind CSS</span>
+            <span className="hidden sm:inline">·</span>
+            <span>env: production</span>
+          </div>
+
+          <a
+            href="#top"
+            className="text-neutral-500 hover:text-neutral-900 transition-colors flex items-center gap-1.5 mt-1"
+          >
+            <span>return_to_top()</span>
+            <span>↑</span>
+          </a>
+        </div>
+      </footer>
     </main>
   );
 }
