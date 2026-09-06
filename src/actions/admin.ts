@@ -56,10 +56,13 @@ export async function createProject(formData: FormData) {
   const repoUrl = formData.get("repoUrl") as string;
   const rawTags = formData.get("tags") as string;
   const featured = formData.get("featured") === "on";
+  const coverImageInput = formData.get("coverImage") as string;
   const imageFile = formData.get("image") as File | null;
 
-  let coverImage = "";
-  if (imageFile && imageFile.size > 0) {
+  let coverImage = coverImageInput?.trim() || "";
+
+  // Fallback to direct file parsing if manual text or compressed string was not provided
+  if (!coverImage && imageFile && imageFile.size > 0) {
     const bytes = await imageFile.arrayBuffer();
     const buffer = Buffer.from(bytes);
     coverImage = `data:${imageFile.type};base64,${buffer.toString("base64")}`;
@@ -76,12 +79,12 @@ export async function createProject(formData: FormData) {
     data: {
       title,
       subtitle,
-      slug,
+      slug: slug.trim().toLowerCase(),
       summary,
       content,
       coverImage,
-      liveUrl: liveUrl || null,
-      repoUrl: repoUrl || null,
+      liveUrl: liveUrl?.trim() || null,
+      repoUrl: repoUrl?.trim() || null,
       tags,
       featured,
     },
@@ -89,6 +92,8 @@ export async function createProject(formData: FormData) {
 
   revalidatePath("/");
   revalidatePath("/admin");
+  revalidatePath("/projects");
+  revalidatePath(`/projects/${slug}`);
   redirect("/admin");
 }
 
@@ -105,16 +110,17 @@ export async function updateProject(formData: FormData) {
   const repoUrl = formData.get("repoUrl") as string;
   const rawTags = formData.get("tags") as string;
   const featured = formData.get("featured") === "on";
+  const coverImageInput = formData.get("coverImage") as string;
   const imageFile = formData.get("image") as File | null;
 
   const dataToUpdate: any = {
     title,
     subtitle,
-    slug,
+    slug: slug.trim().toLowerCase(),
     summary,
     content,
-    liveUrl: liveUrl || null,
-    repoUrl: repoUrl || null,
+    liveUrl: liveUrl?.trim() || null,
+    repoUrl: repoUrl?.trim() || null,
     tags: rawTags
       .split(",")
       .map((t) => t.trim())
@@ -122,7 +128,9 @@ export async function updateProject(formData: FormData) {
     featured,
   };
 
-  if (imageFile && imageFile.size > 0) {
+  if (coverImageInput && coverImageInput.trim().length > 0) {
+    dataToUpdate.coverImage = coverImageInput.trim();
+  } else if (imageFile && imageFile.size > 0) {
     const bytes = await imageFile.arrayBuffer();
     const buffer = Buffer.from(bytes);
     dataToUpdate.coverImage = `data:${imageFile.type};base64,${buffer.toString("base64")}`;
@@ -135,6 +143,8 @@ export async function updateProject(formData: FormData) {
 
   revalidatePath("/");
   revalidatePath("/admin");
+  revalidatePath("/projects");
+  revalidatePath(`/projects/${slug}`);
   redirect("/admin");
 }
 
@@ -148,5 +158,6 @@ export async function deleteProject(formData: FormData) {
 
   revalidatePath("/");
   revalidatePath("/admin");
+  revalidatePath("/projects");
   redirect("/admin");
 }
